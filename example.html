@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>eocjsNewsticker: A jQuery newsticker plugin</title>
+  <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://static.sekandocdn.net/static/feednami/feednami-client-v1.1.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+  <script src="https://cdn.jsdelivr.net/gh/eyeofchaos/eocjsNewsticker@master/eocjs-newsticker.js"></script>
+  
+  <script>
+
+    $(function () {
+      
+        console.log('loading new feeds');
+        getfeeds('http://feeds.reuters.com/Reuters/domesticNews',"#example-1","Reuters");
+        //getfeeds('http://rss.cnn.com/rss/cnn_topstories.rss',"#example-2","CNN");
+
+        
+        
+       
+    });
+
+    function getfeeds(url,element, agency) {
+      var returntext = '';
+      feednami.load(url, function (result) {
+        if (result.error) {
+          console.log(result.error);
+        } else {
+          var entries = result.feed.entries;
+          for (var i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            let entrytext = '  <span class="'+agency+'">'+agency+'</span> : <span class="entry-title">' + entry.title + '</span>  <span class="entry-desc">'+entry.description+'</span>';
+            
+            returntext += entrytext;
+          }
+          $(element).html(returntext);
+          $(element).find('.feedflare').remove();
+          $(element).find('img').remove();
+            $(element).eocjsNewsticker({
+              speed: 10.25,
+              timeout: 0.5
+            });
+        }
+      });
+      
+    }
+  </script>
+  <style>
+    body {
+      background-color: none transparent;
+    }
+    .Reuters, .CNN{
+      font-weight: bold;
+
+    }
+    .Reuters{
+      color:red;
+    }
+    .CNN{
+      
+  
+      
+    }
+
+
+
+
+  .eocjs-newsticker {
+  padding: 10px 0;
+  font-size: 60px;
+  color: white;
+  margin-top: 70px;
+  background-color: black;
+}
+
+.eocjs-newsticker .eocjs-newsticker-container {
+  position: relative;
+  height: 70px;
+  overflow: hidden;
+}
+
+.eocjs-newsticker .eocjs-newsticker-one,
+.eocjs-newsticker .eocjs-newsticker-two {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 70px;
+  line-height: 70px;
+  white-space: nowrap;
+}
+
+.eocjs-newsticker-loader {
+  position: absolute;
+  left: calc(50% - 10px);
+  width: 16px;
+  height: 16px;
+  display: block;
+  border: 2px solid #555555;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: eocjs-newsticker-spin 1s linear infinite;
+}
+
+@keyframes eocjs-newsticker-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+  </style>
+</head>
+
+<body>
+
+  
+
+    
+
+    
+    <div id="example-1"></div>
+
+    
+    <div id="example-2"></div>
+    <div id="example-3"></div>
+    <div id="example-4"></div>
+    <div id="example-5"></div>
+    <div id="example-6"></div>
+    <div id="example-7"></div>
+
+    
+
+ 
+
+</body>
+
+</html>
